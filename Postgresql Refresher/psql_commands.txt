@@ -1,0 +1,125 @@
+postgres=# \h
+Available help:
+  ABORT                            CREATE USER
+  ALTER AGGREGATE                  CREATE USER MAPPING
+  ALTER COLLATION                  CREATE VIEW
+  ALTER CONVERSION                 DEALLOCATE
+
+
+postgres=# \l
+                                         List of databases
+   Name    |  Owner   | Encoding |      Collate       |       Ctype        |   Access privileges
+-----------+----------+----------+--------------------+--------------------+-----------------------
+ postgres  | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ template0 | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +
+           |          |          |                    |                    | postgres=CTc/postgres
+ template1 | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +
+           |          |          |                    |                    | postgres=CTc/postgres
+(3 rows)
+
+
+postgres=# \l postgres
+                                      List of databases
+   Name   |  Owner   | Encoding |      Collate       |       Ctype        | Access privileges
+----------+----------+----------+--------------------+--------------------+-------------------
+ postgres | postgres | UTF8     | English_India.1252 | English_India.1252 |
+(1 row)
+
+
+postgres=# \l+
+                                                                           List of databases
+   Name    |  Owner   | Encoding |      Collate       |       Ctype        |   Access privileges   |  Size   | Tablespace |                Description
+-----------+----------+----------+--------------------+--------------------+-----------------------+---------+------------+--------------------------------------------
+ postgres  | postgres | UTF8     | English_India.1252 | English_India.1252 |                       | 7909 kB | pg_default | default administrative connection database
+ template0 | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +| 7753 kB | pg_default | unmodifiable empty database
+           |          |          |                    |                    | postgres=CTc/postgres |         |            |
+ template1 | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +| 7753 kB | pg_default | default template for new databases
+           |          |          |                    |                    | postgres=CTc/postgres |         |            |
+(3 rows)
+
+
+postgres=# create database users;
+CREATE DATABASE
+
+
+Read queries from a file :
+users=# \i 'C:/Users/malet/OneDrive/Desktop/Refresher/Postgresql Refresher/User_data.sql'
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+
+
+users=# create table users1(id int unique,
+users(# fname varchar(50),
+users(# lname varchar(50),
+users(# email varchar(50),
+users(# gender varchar(50),
+users(# phone int);
+CREATE TABLE
+
+
+users=# alter table users1 alter column phone type varchar(10);
+ALTER TABLE
+
+
+users=# insert into users1(fname,lname,email,gender,phone) values('aparna','modi','aparnamodi@yahoo.com','female','8986656896');
+INSERT 0 1
+
+
+\c <db name> --- to connect to a db
+
+
+users=# \dt
+         List of relations
+ Schema |  Name  | Type  |  Owner
+--------+--------+-------+----------
+ public | users  | table | postgres
+ public | users1 | table | postgres
+(2 rows)
+
+
+postgres=# \c users
+You are now connected to database "users" as user "postgres".
+users=#
+
+
+users=# \d users1
+                      Table "public.users1"
+ Column |         Type          | Collation | Nullable | Default
+--------+-----------------------+-----------+----------+---------
+ id     | integer               |           |          |
+ fname  | character varying(50) |           |          |
+ lname  | character varying(50) |           |          |
+ email  | character varying(50) |           |          |
+ gender | character varying(50) |           |          |
+ phone  | character varying(10) |           |          |
+Indexes:
+    "users1_id_key" UNIQUE CONSTRAINT, btree (id)
+
+
+to see user roles ---
+users=# \du
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+
+users=# insert into users1(fname,lname,email,gender,phone) values('sdf','sddf','sfjds@sfd,com','malee','345678'),('ert','errwe','rwer@fsf.com','male','32323323');
+INSERT 0 2
+
+users=# select * from users;
+  id  |  first_name  |    last_name    |                 email                 |   gender    | phone_number
+------+--------------+-----------------+---------------------------------------+-------------+--------------
+    1 | Simone       | Marcroft        | smarcroft0@go.com                     | Polygender  | 223 904 9385
+    2 | Moise        | Janjusevic      | mjanjusevic1@dion.ne.jp               | Polygender  | 908 967 1712
+    3 | Tybie        | McGilvra        | tmcgilvra2@hao123.com                 | Genderfluid | 829 522 4465
+
+
+tom=# \timing on
+Timing is on.
+tom=# insert into todo values ('Correct footer bug','Mobile version only');
+INSERT 0 1
+Time: 1.067 ms
